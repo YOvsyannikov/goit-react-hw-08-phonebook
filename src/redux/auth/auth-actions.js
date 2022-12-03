@@ -29,3 +29,5 @@ export const logoutError = createAction(LOGOUT_ERROR);
 export const getCurrentUserRequest = createAction(GET_USER_REQUEST);
 export const getCurrentUserSuccess = createAction(GET_USER_SUCCESS);
 export const getCurrentUserError = createAction(GET_USER_ERROR);
+
+export * as authActions from './auth-actions';

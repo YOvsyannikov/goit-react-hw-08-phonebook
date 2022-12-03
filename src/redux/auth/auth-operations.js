@@ -102,3 +102,5 @@ export const getCurrentUser = () => async (dispatch, getState) => {
     toast.warn('Authorization timed out! Please authenticate again!');
   }
 };
+
+export * as authOperations from './auth-operations';

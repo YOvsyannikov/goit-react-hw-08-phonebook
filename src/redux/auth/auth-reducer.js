@@ -74,3 +74,5 @@ export default combineReducers({
   error,
   isLoading,
 });
+
+export * as authReducer from './auth-reducer';
