@@ -1,6 +1,6 @@
 import { NavLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { authSelectors } from '../../redux/auth';
+import { authSelectors } from '../../redux/auth/auth-selectors';
 import s from './Navigation.module.css';
 
 function Navigation() {

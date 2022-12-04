@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { authOperations, authSelectors } from '../../redux/auth';
+import { authOperations } from '../../redux/auth/auth-operations';
+import { authSelectors } from '../../redux/auth/auth-selectors';
 import { toast } from 'react-toastify';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
