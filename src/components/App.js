@@ -1,12 +1,12 @@
 import { lazy, Suspense, useEffect } from 'react';
-import { Routes, Route, Navigate } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
-// import { ToastContainer } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { connect } from 'react-redux';
 import PrivateRoute from './PrivateRoute';
-import PublicRoute from './PublicRoute';
+// import PublicRoute from './PublicRoute';
 
 import Container from './Container/Container';
 import AppBar from './AppBar/AppBar';
@@ -30,8 +30,11 @@ const ContactsView = lazy(() =>
     '../views/ContactsView/ContactsView.js' /* webpackChunkName: "contacts-view" */
   )
 );
-// const NotFoundView = lazy(() =>
-//   import('../views/NotFoundView/NotFoundView.js' /* webpackChunkName: "not-found-view" */));
+const NotFoundView = lazy(() =>
+  import(
+    '../views/NotFoundView/NotFoundView.js' /* webpackChunkName: "not-found-view" */
+  )
+);
 
 function App() {
   const dispatch = useDispatch();
@@ -50,7 +53,9 @@ function App() {
       <AppBar />
       <Suspense fallback={<LoaderComponent />}>
         <Routes>
-          <PublicRoute exact path="/" component={HomeView} />
+          {/* <PublicRoute exact path="/" component={HomeView} /> */}
+          {/* <Route path="/" component={<Layout />}> */}
+          <Route exact path="/" component={<HomeView />} />
 
           <Route
             path="/contacts"
@@ -73,10 +78,12 @@ function App() {
               <PrivateRoute navigateTo="/contacts" component={<LoginView />} />
             }
           />
-
-          <Navigate to="/" />
+          <Route>
+            <NotFoundView />
+          </Route>
         </Routes>
       </Suspense>
+      <ToastContainer autoClose={3700} position="top-center" />
     </Container>
   );
 }
