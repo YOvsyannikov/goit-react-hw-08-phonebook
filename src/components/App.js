@@ -1,10 +1,10 @@
 import { lazy, Suspense, useEffect } from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-
-import { ToastContainer } from 'react-toastify';
+import PropTypes from 'prop-types';
+// import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
+import { connect } from 'react-redux';
 import PrivateRoute from './PrivateRoute';
 import PublicRoute from './PublicRoute';
 
@@ -17,7 +17,6 @@ import { authOperations } from '../redux/auth/auth-operations';
 const HomeView = lazy(() =>
   import('../views/HomeView/HomeView.js' /* webpackChunkName: "home-view" */)
 );
-
 const RegisterView = lazy(() =>
   import(
     '../views/RegisterView/RegisterView.js' /* webpackChunkName: "register-view" */
@@ -31,51 +30,62 @@ const ContactsView = lazy(() =>
     '../views/ContactsView/ContactsView.js' /* webpackChunkName: "contacts-view" */
   )
 );
-
-const NotFoundView = lazy(() =>
-  import(
-    '../views/NotFoundView/NotFoundView.js' /* webpackChunkName: "not-found-view" */
-  )
-);
+// const NotFoundView = lazy(() =>
+//   import('../views/NotFoundView/NotFoundView.js' /* webpackChunkName: "not-found-view" */));
 
 function App() {
   const dispatch = useDispatch();
-
   useEffect(() => {
     dispatch(authOperations.getCurrentUser());
   }, [dispatch]);
 
+  // class App extends Component {
+  //   componentDidMount() {
+  //     this.props.onGetCurrentUser();
+  //   }
+
+  // render() {
   return (
     <Container>
       <AppBar />
-
       <Suspense fallback={<LoaderComponent />}>
         <Routes>
-          <PublicRoute path="/" exact>
-            <HomeView />
-          </PublicRoute>
+          <PublicRoute exact path="/" component={HomeView} />
 
-          <PublicRoute path="/register" restricted redirectTo="/contacts">
-            <RegisterView />
-          </PublicRoute>
+          <Route
+            path="/contacts"
+            element={
+              <PrivateRoute navigateTo="/login" component={<ContactsView />} />
+            }
+          />
+          <Route
+            path="/register"
+            element={
+              <PrivateRoute
+                navigateTo="/contacts"
+                component={<RegisterView />}
+              />
+            }
+          />
+          <Route
+            path="/login"
+            element={
+              <PrivateRoute navigateTo="/contacts" component={<LoginView />} />
+            }
+          />
 
-          <PublicRoute path="/login" restricted redirectTo="/contacts">
-            <LoginView />
-          </PublicRoute>
-
-          <PrivateRoute path="/contacts" redirectTo="/login">
-            <ContactsView />
-          </PrivateRoute>
-
-          <Route>
-            <NotFoundView />
-          </Route>
+          <Navigate to="/" />
         </Routes>
       </Suspense>
-
-      <ToastContainer autoClose={3700} position="top-center" />
     </Container>
   );
 }
 
-export default App;
+App.propTypes = {
+  onGetCurrentUser: PropTypes.func.isRequired,
+};
+
+const mapDispatchToProps = {
+  onGetCurrentUser: authOperations.getCurrentUser,
+};
+export default connect(null, mapDispatchToProps)(App);

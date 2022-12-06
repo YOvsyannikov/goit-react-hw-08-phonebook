@@ -5,18 +5,12 @@ const AuthNav = () => (
   <div>
     <NavLink
       to="/register"
-      exact
-      className={s.link}
-      activeClassName={s.activeLink}
+      exactclassname={s.link}
+      activeclassname={s.activeLink}
     >
       Sign up
     </NavLink>
-    <NavLink
-      to="/login"
-      exact
-      className={s.link}
-      activeClassName={s.activeLink}
-    >
+    <NavLink to="/login" exactclassname={s.link} activeclassname={s.activeLink}>
       Log in
     </NavLink>
   </div>

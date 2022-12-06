@@ -8,16 +8,15 @@ function Navigation() {
 
   return (
     <nav className={s.nav}>
-      <NavLink to="/" exact className={s.link} activeClassName={s.activeLink}>
+      <NavLink to="/" exactclassname={s.link} activeclassname={s.activeLink}>
         Home
       </NavLink>
 
       {isLoggedIn && (
         <NavLink
           to="/contacts"
-          exact
-          className={s.link}
-          activeClassName={s.activeLink}
+          exactclassname={s.link}
+          activeclassname={s.activeLink}
         >
           Contacts
         </NavLink>

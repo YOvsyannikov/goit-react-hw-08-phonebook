@@ -10,7 +10,7 @@ import s from './RegisterView.module.css';
 
 export default function RegisterView() {
   const dispatch = useDispatch();
-  const isLoading = useSelector(authSelectors.getLoading);
+  const isLoading = useSelector(authSelectors.getIsLoggedIn);
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');

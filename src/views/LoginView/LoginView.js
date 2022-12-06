@@ -10,7 +10,7 @@ import s from './LoginView.module.css';
 
 export default function LoginView() {
   const dispatch = useDispatch();
-  const isLoading = useSelector(authSelectors.getLoading);
+  const isLoading = useSelector(authSelectors.getIsLoggedIn);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 

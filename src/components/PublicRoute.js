@@ -1,22 +1,10 @@
-import { Route, Navigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { authSelectors } from '../redux/auth/auth-selectors';
+import { Navigate } from 'react-router-dom';
+import { getIsLoggedIn } from 'redux/auth/auth-selectors';
 
-export default function PublicRoute({
-  isAuthenticated,
-  redirectTo,
-  children,
-  ...routeProps
-}) {
-  const isLoggedIn = useSelector(authSelectors.getIsAuthenticated);
-
-  return (
-    <Route {...routeProps}>
-      {isLoggedIn && routeProps.restricted ? (
-        <Navigate to={redirectTo} />
-      ) : (
-        children
-      )}
-    </Route>
-  );
-}
+export const PublicRoute = ({ children, restricted = false }) => {
+  const isLoading = useSelector(getIsLoggedIn);
+  const shouldRedirect = isLoading && restricted;
+  return shouldRedirect ? <Navigate to="/contacts" /> : children;
+};
+export default PublicRoute;
