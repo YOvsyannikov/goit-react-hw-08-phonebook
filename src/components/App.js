@@ -79,7 +79,7 @@ function App() {
             }
           />
           <Route>
-            <NotFoundView />
+            <Route path="*" element={<NotFoundView />}></Route>
           </Route>
         </Routes>
       </Suspense>
